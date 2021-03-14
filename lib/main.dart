@@ -23,13 +23,30 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
-  String name;
-  String surname;
-  String birth_date;
-  String city;
-  String gender;
-  String vaccine_type;
-  String side_effect;
+  String _name;
+  String _surname;
+  String _cityValue;
+  String _genderValue;
+  String _vaccineTypeValue;
+  String _sideEffectValue;
+
+  List<String> sideEffects = [
+    'Headache',
+    'Fatigue',
+  ];
+  List<String> vaccineTypes = [
+    'Pfizer-Biontech',
+    'Sputnik V',
+    'Oxford-Astra-Zeneca',
+    'Sinovac',
+  ];
+  List<String> cities = ['Ankara', 'İstanbul', 'İzmir'];
+  List<String> genders = [
+    'Male',
+    'Female',
+    'Bisexual',
+    'Non-binary',
+  ];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -45,7 +62,7 @@ class FormScreenState extends State<FormScreen> {
         return null;
       },
       onSaved: (String value) {
-        name = value;
+        _name = value;
       },
     );
   }
@@ -62,94 +79,151 @@ class FormScreenState extends State<FormScreen> {
         return null;
       },
       onSaved: (String value) {
-        surname = value;
+        _surname = value;
       },
     );
   }
 
   Widget _buildBirthDate() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Birth date'),
-      maxLength: 20,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Birth date is Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        birth_date = value;
-      },
+    return InputDatePickerFormField(
+      firstDate: DateTime(1920),
+      lastDate: DateTime(2021),
+      errorFormatText:
+          "Input is in wrong format, please enter in dd/mm/yyyy format",
+      errorInvalidText: "Entered date is invalid",
+      fieldLabelText: "Please enter your birth date",
     );
   }
 
   Widget _buildCity() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'City'),
-      maxLength: 20,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'City is Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        city = value;
+    return DropdownButton(
+      hint: _cityValue == null
+          ? Text('City')
+          : Text(
+              _cityValue,
+              style: TextStyle(color: Colors.blue),
+            ),
+      isExpanded: true,
+      iconSize: 30.0,
+      style: TextStyle(color: Colors.blue),
+      items: cities.map(
+        (val) {
+          return DropdownMenuItem<String>(
+            value: val,
+            child: Text(val),
+          );
+        },
+      ).toList(),
+      onChanged: (val) {
+        setState(
+          () {
+            _cityValue = val;
+          },
+        );
       },
     );
   }
 
   Widget _buildGender() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Gender'),
-      maxLength: 20,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Gender is Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        gender = value;
+    return DropdownButton(
+      hint: _genderValue == null
+          ? Text('Gender')
+          : Text(
+              _genderValue,
+              style: TextStyle(color: Colors.blue),
+            ),
+      isExpanded: true,
+      iconSize: 30.0,
+      style: TextStyle(color: Colors.blue),
+      items: genders.map(
+        (val) {
+          return DropdownMenuItem<String>(
+            value: val,
+            child: Text(val),
+          );
+        },
+      ).toList(),
+      onChanged: (val) {
+        setState(
+          () {
+            _genderValue = val;
+          },
+        );
       },
     );
   }
 
   Widget _buildVaccineType() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Vaccine Type'),
-      maxLength: 20,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Vaccine type is Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        vaccine_type = value;
+    return DropdownButton(
+      hint: _vaccineTypeValue == null
+          ? Text('Vaccine Type')
+          : Text(
+              _vaccineTypeValue,
+              style: TextStyle(color: Colors.blue),
+            ),
+      isExpanded: true,
+      iconSize: 30.0,
+      style: TextStyle(color: Colors.blue),
+      items: vaccineTypes.map(
+        (val) {
+          return DropdownMenuItem<String>(
+            value: val,
+            child: Text(val),
+          );
+        },
+      ).toList(),
+      onChanged: (val) {
+        setState(
+          () {
+            _vaccineTypeValue = val;
+          },
+        );
       },
     );
   }
 
   Widget _buildSideEffect() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Side Effect'),
-      maxLength: 20,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Side effect is Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        side_effect = value;
+    return DropdownButton(
+      hint: _sideEffectValue == null
+          ? Text('Side Effects')
+          : Text(
+              _sideEffectValue,
+              style: TextStyle(color: Colors.blue),
+            ),
+      isExpanded: true,
+      iconSize: 30.0,
+      style: TextStyle(color: Colors.blue),
+      items: sideEffects.map(
+        (val) {
+          return DropdownMenuItem<String>(
+            value: val,
+            child: Text(val),
+          );
+        },
+      ).toList(),
+      onChanged: (val) {
+        setState(
+          () {
+            _sideEffectValue = val;
+          },
+        );
       },
     );
+  }
+
+  void openDialog() {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+              title: Text('Side Effects'),
+              actions: <Widget>[BackButton(), CloseButton()],
+              content: Container(
+                width: 300,
+                height: 400,
+              ) //child: MultiSelection(sideEffects)),
+              );
+        });
   }
 
   @override
@@ -170,7 +244,7 @@ class FormScreenState extends State<FormScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(24),
+          margin: EdgeInsets.all(32),
           child: Form(
             key: _formKey,
             child: Column(
@@ -184,10 +258,10 @@ class FormScreenState extends State<FormScreen> {
                 _buildVaccineType(),
                 _buildSideEffect(),
                 SizedBox(height: 100),
-                RaisedButton(
+                ElevatedButton(
                   child: Text(
                     'Submit',
-                    style: TextStyle(color: Colors.blue, fontSize: 16),
+                    style: TextStyle(color: Colors.white70, fontSize: 16),
                   ),
                   onPressed: () {
                     if (!_formKey.currentState.validate()) {
@@ -196,9 +270,8 @@ class FormScreenState extends State<FormScreen> {
 
                     _formKey.currentState.save();
 
-                    print(name);
-                    print(surname);
-
+                    print(_name);
+                    print(_surname);
                     //Send to API
                   },
                 )
