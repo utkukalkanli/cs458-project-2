@@ -25,6 +25,7 @@ class FormScreen extends StatefulWidget {
 class FormScreenState extends State<FormScreen> {
   String _name;
   String _surname;
+  DateTime _birthDate;
   String _cityValue;
   String _genderValue;
   String _vaccineTypeValue;
@@ -33,18 +34,23 @@ class FormScreenState extends State<FormScreen> {
   List<String> sideEffects = [
     'Headache',
     'Fatigue',
+    'Fever',
+    'Muscle pain',
+    'Diarrhoea',
+    'Pain at the injection site'
   ];
   List<String> vaccineTypes = [
-    'Pfizer-Biontech',
+    'Pfizer-BioNtech',
     'Sputnik V',
     'Oxford-Astra-Zeneca',
     'Sinovac',
+    'Moderna',
+    'Johnson-Johnson'
   ];
   List<String> cities = ['Ankara', 'İstanbul', 'İzmir'];
   List<String> genders = [
     'Male',
     'Female',
-    'Bisexual',
     'Non-binary',
   ];
 
@@ -96,7 +102,13 @@ class FormScreenState extends State<FormScreen> {
   }
 
   Widget _buildCity() {
-    return DropdownButton(
+    return DropdownButtonFormField(
+      validator: (String value) {
+        if (value == null) {
+          return 'City is required';
+        }
+        return null;
+      },
       hint: _cityValue == null
           ? Text('City')
           : Text(
@@ -125,7 +137,13 @@ class FormScreenState extends State<FormScreen> {
   }
 
   Widget _buildGender() {
-    return DropdownButton(
+    return DropdownButtonFormField(
+      validator: (String value) {
+        if (value == null) {
+          return 'Gender is required';
+        }
+        return null;
+      },
       hint: _genderValue == null
           ? Text('Gender')
           : Text(
@@ -154,7 +172,13 @@ class FormScreenState extends State<FormScreen> {
   }
 
   Widget _buildVaccineType() {
-    return DropdownButton(
+    return DropdownButtonFormField(
+      validator: (String value) {
+        if (value == null) {
+          return 'Vaccine type is required';
+        }
+        return null;
+      },
       hint: _vaccineTypeValue == null
           ? Text('Vaccine Type')
           : Text(
@@ -183,7 +207,13 @@ class FormScreenState extends State<FormScreen> {
   }
 
   Widget _buildSideEffect() {
-    return DropdownButton(
+    return DropdownButtonFormField(
+      validator: (String value) {
+        if (value == null) {
+          return 'Side effect is required';
+        }
+        return null;
+      },
       hint: _sideEffectValue == null
           ? Text('Side Effects')
           : Text(
@@ -211,21 +241,6 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
-  void openDialog() {
-    showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-              title: Text('Side Effects'),
-              actions: <Widget>[BackButton(), CloseButton()],
-              content: Container(
-                width: 300,
-                height: 400,
-              ) //child: MultiSelection(sideEffects)),
-              );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -244,7 +259,7 @@ class FormScreenState extends State<FormScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(32),
+          margin: EdgeInsets.all(24),
           child: Form(
             key: _formKey,
             child: Column(
@@ -272,6 +287,11 @@ class FormScreenState extends State<FormScreen> {
 
                     print(_name);
                     print(_surname);
+                    print(_birthDate);
+                    print(_genderValue);
+                    print(_cityValue);
+                    print(_vaccineTypeValue);
+                    print(_sideEffectValue);
                     //Send to API
                   },
                 )
