@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 void main() => runApp(MyApp());
 
@@ -7,6 +9,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        SecondPage.routeName: (context) => SecondPage(),
+      },
       title: 'Covid 19 Vaccine Survey',
       theme: ThemeData(
         primarySwatch: Colors.teal,
@@ -16,10 +21,58 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class ScreenArguments {
+  String _name;
+  String _surname;
+  DateTime birthDate;
+  String _cityValue;
+  String _genderValue;
+  String _vaccineTypeValue;
+  String _sideEffectValue;
+  ScreenArguments(this._name, this._surname, this.birthDate, this._genderValue,
+      this._cityValue, this._sideEffectValue, this._vaccineTypeValue);
+}
+
 class FormScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return FormScreenState();
+  }
+}
+
+class SecondPage extends StatelessWidget {
+  static const routeName = '/submitResult';
+  @override
+  Widget build(BuildContext context) {
+    // Extract the arguments from the current ModalRoute settings and cast
+    // them as ScreenArguments.
+    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Form Submitted"),
+        ),
+        body: Center(
+            child: Container(
+          child: Column(
+            children: [
+              Text(args._name),
+              Text(args._surname),
+              Text(args.birthDate.toString()),
+              Text(args._genderValue),
+              Text(args._cityValue),
+              Text(args._vaccineTypeValue),
+              Text(args._sideEffectValue),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate back to first route when tapped.
+                  Navigator.pop(context);
+                },
+                child: Text('Go back!'),
+              ),
+            ],
+          ),
+        )));
   }
 }
 
@@ -57,7 +110,15 @@ class FormScreenState extends State<FormScreen> {
     'Moderna',
     'Johnson-Johnson'
   ];
-  List<String> cities = ['Ankara', 'İstanbul', 'İzmir'];
+  List<String> cities = [
+    'Ankara',
+    'İstanbul',
+    'İzmir',
+    'Adana',
+    'Adıyaman',
+    'Afyonkarahisar',
+    'Ağrı'
+  ];
   List<String> genders = [
     'Male',
     'Female',
@@ -65,6 +126,18 @@ class FormScreenState extends State<FormScreen> {
   ];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  List _cities = [];
+  // Fetch content from the json file
+  Future<void> readJson() async {
+    final String response =
+        await rootBundle.loadString('json/cities_of_turkey.json');
+    final data = await json.decode(response);
+    setState(() {
+      _cities = data["items"];
+    });
+    print(cities);
+  }
 
   Widget _buildName() {
     return TextFormField(
@@ -313,6 +386,11 @@ class FormScreenState extends State<FormScreen> {
           print(_genderValue);
           print(_vaccineTypeValue);
           print(_sideEffectValue);
+          Navigator.pushNamed(context, SecondPage.routeName,
+              arguments: ScreenArguments(_name, _surname, birthDate,
+                  _genderValue, _cityValue, _sideEffectValue, _vaccineTypeValue)
+              //MaterialPageRoute(builder: (context) => SecondPage()),
+              );
           //Send to API
         },
       ),
