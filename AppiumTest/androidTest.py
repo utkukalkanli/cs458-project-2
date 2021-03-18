@@ -22,9 +22,14 @@ driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
 
 wait = WebDriverWait(driver, 20)
 el0 = wait.until(EC.element_to_be_clickable((By.XPATH,"/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText[1]")))
-
 el0 = driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText[1]")
-# el0.click()
+el0.click()
+
+driver.implicitly_wait(10)
+txtfld = driver.f
+
+el3 = wait.until(EC.element((By.XPATH,'//android.widget.Button[@content-desc="Gender"]')))
+
 # Boyle yazi yaziyolar normalde ama calismiyor.
 # el0.send_keys("hello")
 
