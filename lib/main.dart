@@ -21,58 +21,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ScreenArguments {
-  String _name;
-  String _surname;
-  DateTime birthDate;
-  String _cityValue;
-  String _genderValue;
-  String _vaccineTypeValue;
-  String _sideEffectValue;
-  ScreenArguments(this._name, this._surname, this.birthDate, this._genderValue,
-      this._cityValue, this._sideEffectValue, this._vaccineTypeValue);
-}
-
 class FormScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return FormScreenState();
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  static const routeName = '/submitResult';
-  @override
-  Widget build(BuildContext context) {
-    // Extract the arguments from the current ModalRoute settings and cast
-    // them as ScreenArguments.
-    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
-
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Form Submitted"),
-        ),
-        body: Center(
-            child: Container(
-          child: Column(
-            children: [
-              Text(args._name),
-              Text(args._surname),
-              Text(args.birthDate.toString()),
-              Text(args._genderValue),
-              Text(args._cityValue),
-              Text(args._vaccineTypeValue),
-              Text(args._sideEffectValue),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigate back to first route when tapped.
-                  Navigator.pop(context);
-                },
-                child: Text('Go back!'),
-              ),
-            ],
-          ),
-        )));
   }
 }
 
@@ -155,7 +107,11 @@ class FormScreenState extends State<FormScreen> {
       onChanged: (String value) {
         setState(() {
           _name = value;
-          nameFilled = true;
+          if (_name.length == 0) {
+            nameFilled = false;
+          } else {
+            nameFilled = true;
+          }
         });
       },
     );
@@ -178,7 +134,11 @@ class FormScreenState extends State<FormScreen> {
         setState(
           () {
             _surname = value;
-            surnameFilled = true;
+            if (_surname.length == 0) {
+              surnameFilled = false;
+            } else {
+              surnameFilled = true;
+            }
           },
         );
       },
@@ -437,5 +397,54 @@ class FormScreenState extends State<FormScreen> {
         ),
       ),
     );
+  }
+}
+
+// things about result page
+class ScreenArguments {
+  String _name;
+  String _surname;
+  DateTime birthDate;
+  String _cityValue;
+  String _genderValue;
+  String _vaccineTypeValue;
+  String _sideEffectValue;
+  ScreenArguments(this._name, this._surname, this.birthDate, this._genderValue,
+      this._cityValue, this._sideEffectValue, this._vaccineTypeValue);
+}
+
+class SecondPage extends StatelessWidget {
+  static const routeName = '/submitResult';
+  @override
+  Widget build(BuildContext context) {
+    // Extract the arguments from the current ModalRoute settings and cast
+    // them as ScreenArguments.
+    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Form Submitted"),
+        ),
+        body: Center(
+            child: Container(
+          child: Column(
+            children: [
+              Text(args._name),
+              Text(args._surname),
+              Text(args.birthDate.toString()),
+              Text(args._genderValue),
+              Text(args._cityValue),
+              Text(args._vaccineTypeValue),
+              Text(args._sideEffectValue),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate back to first route when tapped.
+                  Navigator.pop(context);
+                },
+                child: Text('Go back!'),
+              ),
+            ],
+          ),
+        )));
   }
 }
