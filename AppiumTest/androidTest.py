@@ -43,28 +43,26 @@ surname_field.click()
 sleep(5)
 write_text("mehmetoglu")
 
-# # Selecting Birth Date
-# select_birth_button = driver.find_element_by_accessibility_id("Select birth date")
-# select_birth_button.click()
+# Selecting Birth Date
+birth_date = driver.find_element_by_accessibility_id("Select birth date")
+birth_date.click()
+select_year_btn = driver.find_element_by_accessibility_id("Select year")
+select_year_btn.click()
 
-# select_year_button = wait.until(EC.element_to_be_clickable((By.XPATH,'//android.widget.Button[@content-desc="Select year"]')))
-# TouchAction().tap(select_year_button)
-# print("Clicked Select Year")
+sleep(2)
 
-# wait.until(EC.element_to_be_clickable((By.XPATH,'//android.widget.Button[@content-desc="2007"]')))
-# TouchAction(driver)   .press(x=448, y=942)   .move_to(x=495, y=1490)   .release()   .perform()
+TouchAction(driver)   .long_press(x=707, y=900)   .move_to(x=707, y=1600)   .release()   .perform()
+
+sleep(1)
     
-# button_1990 = driver.find_element_by_accessibility_id("1990")
-# TouchAction().tap(button_1990)
-
-# el7 = driver.find_element_by_accessibility_id("Next month April 1990")
-# TouchAction().tap(el7)
-	
-# select_year_button = wait.until(EC.element_to_be_clickable((By.XPATH,'//android.view.View[@content-desc="1, Sunday, April 1, 1990"]')))
-# TouchAction().tap(el6)
-
-# el8 = wait.until(EC.element_to_be_clickable((By.XPATH,'//android.widget.Button[@content-desc="OK"]')))
-# TouchAction().tap(el8)
+btn_1990 = driver.find_element_by_accessibility_id("1990")
+btn_1990.click()
+el4 = driver.find_element_by_accessibility_id("Next month April 1990")
+el4.click()
+el5 = driver.find_element_by_accessibility_id("1, Sunday, April 1, 1990")
+el5.click()
+el6 = driver.find_element_by_accessibility_id("OK")
+el6.click()
 
 # Click City
 el1 = wait.until(EC.element_to_be_clickable((By.XPATH,'//android.widget.Button[@content-desc="City"]')))
