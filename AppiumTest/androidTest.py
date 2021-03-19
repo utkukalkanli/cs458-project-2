@@ -1,7 +1,3 @@
-# This sample code uses the Appium python client
-# pip install Appium-Python-Client
-# Then you can paste this into a file and simply run with Python
-
 import unittest
 from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -18,8 +14,8 @@ class VaccineAppTests(unittest.TestCase):
         caps = {}
         caps["deviceName"] = "emulator-5554"
         caps["platformName"] = "android"
-        caps["appPackage"] = "funksoulbrother.vaccine_survey"
-        caps["appActivity"] = "funksoulbrother.vaccine_survey.MainActivity"
+        caps["appPackage"] = "com.example.cs453_project"
+        caps["appActivity"] = "com.example.cs453_project.MainActivity"
         caps["noReset"] = True
         caps["ensureWebviewsHavePages"] = True
 
@@ -31,119 +27,175 @@ class VaccineAppTests(unittest.TestCase):
     def tearDownClass(self):
         self.driver.quit()
 
-    def write_text(self, text):
-        for letter in text:
-            if(letter.isupper()):
-                print("UPPER")
-                letter = letter.lower()
-                self.driver.press_keycode(60)
-            cur_letter_key = ord(letter)
-            if (cur_letter_key >= 97  and cur_letter_key <= 122):
-                self.driver.press_keycode(cur_letter_key - 68)
-            elif (cur_letter_key >= 48  and cur_letter_key <= 57):
-                self.driver.press_keycode(cur_letter_key - 41)
-
     def check_submit_exists(self):
-        self.driver.hide_keyboard()
+        # self.driver.hide_keyboard()
         self.driver.implicitly_wait(1)
-        submit_btn = self.driver.find_elements_by_accessibility_id('Submit')
+        submit_btn = self.driver.find_elements_by_id("com.example.cs453_project:id/button")
         self.driver.implicitly_wait(20)
+        print(len(submit_btn))
         return len(submit_btn) == 1
 
     def test_case1(self):
-        name_field = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText[1]")
-        name_field.click()
-
-        sleep(5)
-
-        # Send Keys Won't Work for some reason.
-        # name_field.send_keys('Ahmet')
-        self.write_text('Ahmet4')
-
-        surname_field = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]")
-        surname_field.click()
-
-        sleep(5)
-        self.write_text("Mehmetoglu5")
-
-        # Back
-        self.driver.press_keycode(4)
-
-        # Selecting Birth Date
-        birth_date = self.driver.find_element_by_accessibility_id("Select birth date")
-        birth_date.click()
-        select_year_btn = self.driver.find_element_by_accessibility_id("Select year")
-        select_year_btn.click()
-
-        sleep(2)
-
-        TouchAction(self.driver)   .long_press(x=707, y=1000)   .move_to(x=707, y=1400)   .release()   .perform()
-        TouchAction(self.driver)   .long_press(x=707, y=1000)   .move_to(x=707, y=1400)   .release()   .perform()
-
-        sleep(1)
-            
-        btn_1990 = self.driver.find_element_by_accessibility_id("1990")
-        btn_1990.click()
-        el4 = self.driver.find_element_by_accessibility_id("Next month April 1990")
-        el4.click()
-        el5 = self.driver.find_element_by_accessibility_id("1, Sunday, April 1, 1990")
-        el5.click()
-        el6 = self.driver.find_element_by_accessibility_id("OK")
-        el6.click()
-
-        # Click City
-        city_button = self.driver.find_element_by_accessibility_id("City")
-        city_button.click()
-
-        # Choose Ankara
-        ankara_button = self.driver.find_element_by_accessibility_id("Ankara")
-        ankara_button.click()
-
-        # Click Gender
-        gender_button = self.driver.find_element_by_accessibility_id("Gender")
-        gender_button.click()
-
-        # Choose Male
-        male_button = self.driver.find_element_by_accessibility_id("Male")
-        male_button.click()
-
-        # Click Vaccince Type
-        vac_type = self.driver.find_element_by_accessibility_id("Vaccine Type")
-        vac_type.click()
-
-        # Choose Type
-        astra_zen = self.driver.find_element_by_accessibility_id("Oxford-Astra-Zeneca")
-        astra_zen.click()
 
         self.assertFalse(self.check_submit_exists())
 
-        # Choose Side Effects
-        side_effects = self.driver.find_element_by_accessibility_id("Side Effects")
-        side_effects.click()
+        name_field = self.driver.find_element_by_id("com.example.cs453_project:id/nameedittext")
+        name_field.click()
+        name_field.send_keys("Artun")
+
+        surname_field = self.driver.find_element_by_id("com.example.cs453_project:id/surnameedittext")
+        surname_field.click()
+        surname_field.send_keys("Cura")
+
+        select_data_btn = self.driver.find_element_by_id("com.example.cs453_project:id/selectDate")
+        select_data_btn.click()
+        select_year_btn = self.driver.find_element_by_id("android:id/date_picker_header_year")
+        select_year_btn.click()
+        TouchAction(self.driver)   .press(x=542, y=704)   .move_to(x=535, y=1503)   .release()   .perform()
+            
+        choose_year_btn = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/android.widget.TextView[2]")
+        choose_year_btn.click()
+        date_ok_btn = self.driver.find_element_by_id("android:id/button1")
+        date_ok_btn.click()
+
+        self.assertFalse(self.check_submit_exists())
 
 
-        # Choose Muscle Pain
-        muscle_pain = self.driver.find_element_by_accessibility_id("Muscle pain")
-        muscle_pain.click()
+        city_dropdown = self.driver.find_element_by_id("com.example.cs453_project:id/spinnercity")
+        city_dropdown.click()
+        chosen_city = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.TextView[3]")
+        chosen_city.click()
+
+        gender_dropdown = self.driver.find_element_by_id("com.example.cs453_project:id/spinnersex")
+        gender_dropdown.click()
+        chosen_gender = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.TextView[2]")
+        chosen_gender.click()
+
+        self.assertFalse(self.check_submit_exists())
+
+        vaccine_dropdown = self.driver.find_element_by_id("com.example.cs453_project:id/spinnervaccine")
+        vaccine_dropdown.click()
+        chosen_vaccine = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.TextView[5]")
+        chosen_vaccine.click()
+
+        effect_dropdown = self.driver.find_element_by_id("com.example.cs453_project:id/spinnersideeffect")
+        effect_dropdown.click()
+        chosen_effect = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.TextView[5]")
+        chosen_effect.click()
 
         self.assertTrue(self.check_submit_exists())
 
+        name_field.clear()
+
+        self.assertFalse(self.check_submit_exists())
+  
     def test_case2(self):
-        name_field = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText[2]")
+        valid_names = ["Ahmet", "Hasan", "Jake"]
+        invalid_names = [" ", "Mahmut3", "Can*", "Azizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"]
+        name_field = self.driver.find_element_by_id("com.example.cs453_project:id/nameedittext")
         name_field.click()
-
-        sleep(5)
-
-        # Send Keys Won't Work for some reason.
-        # name_field.send_keys('Ahmet')
-        self.write_text('Mahmux')
-        # self.driver.reset()
-        # Back
-        self.driver.press_keycode(4)
-
         
+        for cur_name in valid_names:
+            name_field.send_keys(cur_name)
+            self.assertEqual(name_field.text, cur_name)
+        for cur_name in invalid_names:
+            name_field.send_keys(cur_name)
+            self.assertNotEqual(name_field.text, cur_name)
 
+        surname_field = self.driver.find_element_by_id("com.example.cs453_project:id/surnameedittext")
+        surname_field.click()
 
+        for cur_name in valid_names:
+            surname_field.send_keys(cur_name)
+            self.assertEqual(surname_field.text, cur_name)
+        for cur_name in invalid_names:
+            surname_field.send_keys(cur_name)
+            self.assertNotEqual(surname_field.text, cur_name)
+
+    def test_case3(self):
+        name_field = self.driver.find_element_by_id("com.example.cs453_project:id/nameedittext")
+        name_field.click()
+        name_field.send_keys("Artun")
+        surname_field = self.driver.find_element_by_id("com.example.cs453_project:id/surnameedittext")
+        surname_field.click()
+        surname_field.send_keys("Cura")
+
+        submit_btn = self.driver.find_element_by_id("com.example.cs453_project:id/button")
+        submit_btn.click()
+
+        submit_result = self.driver.find_element_by_id("android:id/message").text
+        print(submit_result)
+
+        result_lines = submit_result.splitlines()
+        final_result_lines = []
+        for cur_line in result_lines:
+            final_result_lines.append(cur_line.split(":")[1][1:])
+
+        close_msg = self.driver.find_element_by_id("android:id/button1")
+        close_msg.click()
+
+        entered_date = self.driver.find_element_by_id("com.example.cs453_project:id/dateTxt").text
+        entered_city = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.Spinner[1]/android.widget.TextView").text
+        entered_sex = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.Spinner[2]/android.widget.TextView").text
+        entered_vaccine = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.Spinner[3]/android.widget.TextView").text
+        entered_effect = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.Spinner[4]/android.widget.TextView").text
+
+        self.assertEqual(final_result_lines[0], name_field.text)
+        self.assertEqual(final_result_lines[1], surname_field.text)
+        self.assertEqual(final_result_lines[2], entered_date)
+        self.assertEqual(final_result_lines[3], entered_city)
+        self.assertEqual(final_result_lines[4], entered_sex)
+        self.assertEqual(final_result_lines[5], entered_vaccine)
+        self.assertEqual(final_result_lines[6], entered_effect)
+
+    def test_case4(self):
+        name_field = self.driver.find_element_by_id("com.example.cs453_project:id/nameedittext")
+        self.assertFalse(name_field.is_enabled())
+
+        surname_field = self.driver.find_element_by_id("com.example.cs453_project:id/surnameedittext")
+        self.assertFalse(surname_field.is_enabled())
+
+        select_data_btn = self.driver.find_element_by_id("com.example.cs453_project:id/selectDate")
+        self.assertFalse(select_data_btn.is_enabled())
+
+        city_dropdown = self.driver.find_element_by_id("com.example.cs453_project:id/spinnercity")
+        self.assertFalse(city_dropdown.is_enabled())
+
+        gender_dropdown = self.driver.find_element_by_id("com.example.cs453_project:id/spinnersex")
+        self.assertFalse(gender_dropdown.is_enabled()) 
+
+        vaccine_dropdown = self.driver.find_element_by_id("com.example.cs453_project:id/spinnervaccine")
+        self.assertFalse(vaccine_dropdown.is_enabled())
+
+        effect_dropdown = self.driver.find_element_by_id("com.example.cs453_project:id/spinnersideeffect")
+        self.assertFalse(effect_dropdown.is_enabled())
+
+    def test_case5(self):
+        self.driver.reset()
+
+        name_field = self.driver.find_element_by_id("com.example.cs453_project:id/nameedittext")
+        surname_field = self.driver.find_element_by_id("com.example.cs453_project:id/surnameedittext")
+
+        try:
+            self.driver.implicitly_wait(0)
+            entered_date = self.driver.find_element_by_id("com.example.cs453_project:id/dateTxt").text
+            self.driver.implicitly_wait(20)
+            print(self.assertTrue(False))
+        except:
+            print("DATE NOT ENTERED")
+
+        entered_city = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.Spinner[1]/android.widget.TextView").text
+        entered_sex = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.Spinner[2]/android.widget.TextView").text
+        entered_vaccine = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.Spinner[3]/android.widget.TextView").text
+        entered_effect = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.Spinner[4]/android.widget.TextView").text
+
+        self.assertEqual("Name", name_field.text)
+        self.assertEqual("Surname", surname_field.text)
+        self.assertEqual("City", entered_city)
+        self.assertEqual("Gender", entered_sex)
+        self.assertEqual("Vaccine Type", entered_vaccine)
+        self.assertEqual("None", entered_effect)
+        
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(VaccineAppTests)
