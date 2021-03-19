@@ -362,6 +362,33 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  Widget _buildXX() {
+    return TextFormField(
+      maxLength: 20,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Required';
+        } else if (!RegExp(regExp).hasMatch(value)) {
+          return 'Please enter a valid input';
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        _name = value;
+      },
+      onChanged: (String value) {
+        setState(() {
+          _name = value;
+          if (_name.length == 0) {
+            nameFilled = false;
+          } else {
+            nameFilled = true;
+          }
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -395,6 +422,7 @@ class FormScreenState extends State<FormScreen> {
                 _buildVaccineType(),
                 _buildSideEffect(),
                 _buildSubmitButton(),
+                _buildXX(),
                 SizedBox(height: 100),
               ],
             ),
