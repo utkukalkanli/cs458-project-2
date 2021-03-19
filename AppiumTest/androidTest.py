@@ -36,7 +36,7 @@ class VaccineAppTests(unittest.TestCase):
             if(letter.isupper()):
                 print("UPPER")
                 letter = letter.lower()
-                self.driver.press_keycode(59)
+                self.driver.press_keycode(60)
             cur_letter_key = ord(letter)
             if (cur_letter_key >= 97  and cur_letter_key <= 122):
                 self.driver.press_keycode(cur_letter_key - 68)
@@ -49,20 +49,6 @@ class VaccineAppTests(unittest.TestCase):
         submit_btn = self.driver.find_elements_by_accessibility_id('Submit')
         self.driver.implicitly_wait(20)
         return len(submit_btn) == 1
-
-
-    def test_asomething(self):
-        name_field = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText[2]")
-        name_field.click()
-
-        sleep(5)
-
-        # Send Keys Won't Work for some reason.
-        # name_field.send_keys('Ahmet')
-        self.write_text('Mahmux')
-        # self.driver.reset()
-        # Back
-        self.driver.press_keycode(4)
 
     def test_case1(self):
         name_field = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText[1]")
@@ -91,7 +77,8 @@ class VaccineAppTests(unittest.TestCase):
 
         sleep(2)
 
-        TouchAction(self.driver)   .long_press(x=707, y=900)   .move_to(x=707, y=1600)   .release()   .perform()
+        TouchAction(self.driver)   .long_press(x=707, y=1000)   .move_to(x=707, y=1400)   .release()   .perform()
+        TouchAction(self.driver)   .long_press(x=707, y=1000)   .move_to(x=707, y=1400)   .release()   .perform()
 
         sleep(1)
             
@@ -141,8 +128,18 @@ class VaccineAppTests(unittest.TestCase):
 
         self.assertTrue(self.check_submit_exists())
 
+    def test_case2(self):
+        name_field = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText[2]")
+        name_field.click()
 
+        sleep(5)
 
+        # Send Keys Won't Work for some reason.
+        # name_field.send_keys('Ahmet')
+        self.write_text('Mahmux')
+        # self.driver.reset()
+        # Back
+        self.driver.press_keycode(4)
 
         
 
