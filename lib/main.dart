@@ -36,7 +36,7 @@ class FormScreenState extends State<FormScreen> {
   String _genderValue;
   String _vaccineTypeValue;
   String _sideEffectValue;
-
+  String regExp = r'^[a-z A-Z]+$';
   bool nameFilled = false;
   bool surnameFilled = false;
   bool birthDateFilled = false;
@@ -97,8 +97,11 @@ class FormScreenState extends State<FormScreen> {
       maxLength: 20,
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Name is Required';
+          return 'Email is Required';
+        } else if (!RegExp(regExp).hasMatch(value)) {
+          return 'Please enter a valid name';
         }
+
         return null;
       },
       onSaved: (String value) {
@@ -124,6 +127,8 @@ class FormScreenState extends State<FormScreen> {
       validator: (String value) {
         if (value.isEmpty) {
           return 'Surname is Required';
+        } else if (!RegExp(regExp).hasMatch(value)) {
+          return 'Please enter a valid surname';
         }
         return null;
       },
