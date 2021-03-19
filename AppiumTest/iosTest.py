@@ -90,10 +90,121 @@ class LocalIosTest(unittest.TestCase):
 
 
     def testCase_3(self):
+        self.driver.orientation = "LANDSCAPE"
+        self.driver.find_element_by_xpath("xpath=//*[@placeholder='Name']").send_keys('Adnan')
+        self.driver.find_element_by_xpath("xpath=//*[@placeholder='Surname']").send_keys('Ziyagil')
+        self.driver.press_keycode(66)
+        # Selecting Birth Date
+        self.driver.find_element_by_accessibility_id("Select birth date").click()
+        self.driver.find_element_by_accessibility_id("Select year").click()
+
+        TouchAction(self.driver)   .long_press(x=707, y=1000)   .move_to(x=707, y=1400)   .release()   .perform()
+        TouchAction(self.driver)   .long_press(x=707, y=1000)   .move_to(x=707, y=1400)   .release()   .perform()
+
+        btn_1990 = self.driver.find_element_by_accessibility_id("1990").click()
+        btn_1990.click()
+        el4 = self.driver.find_element_by_accessibility_id("Next month April 1990")
+        el4.click()
+        el5 = self.driver.find_element_by_accessibility_id("1, Sunday, April 1, 1990")
+        el5.click()
+        el6 = self.driver.find_element_by_accessibility_id("OK")
+        el6.click()
+
+        # Click City
+        city_button = self.driver.find_element_by_accessibility_id("City")
+        city_button.click()
+
+        # Choose Ankara
+        ankara_button = self.driver.find_element_by_accessibility_id("Ankara")
+        ankara_button.click()
+
+        # Click Gender
+        gender_button = self.driver.find_element_by_accessibility_id("Gender")
+        gender_button.click()
+
+        # Choose Male
+        male_button = self.driver.find_element_by_accessibility_id("Male")
+        male_button.click()
+
+        # Click Vaccince Type
+        vac_type = self.driver.find_element_by_accessibility_id("Vaccine Type")
+        vac_type.click()
+
+        # Choose Type
+        astra_zen = self.driver.find_element_by_accessibility_id("Oxford-Astra-Zeneca")
+        astra_zen.click()
+
+        self.assertFalse(self.check_submit_exists())
+
+        # Choose Side Effects
+        side_effects = self.driver.find_element_by_accessibility_id("Side Effects")
+        side_effects.click()
+
+        # Choose Muscle Pain
+        muscle_pain = self.driver.find_element_by_accessibility_id("Muscle pain")
+        muscle_pain.click()
 
     def testCase_4(self):
 
+
     def testCase_5(self):
+        self.driver.find_element_by_xpath("xpath=//*[@placeholder='Name']").send_keys('Adnan')
+        self.driver.find_element_by_xpath("xpath=//*[@placeholder='Surname']").send_keys('Ziyagil')
+        self.driver.press_keycode(66)
+        # Selecting Birth Date
+        self.driver.find_element_by_accessibility_id("Select birth date").click()
+        self.driver.find_element_by_accessibility_id("Select year").click()
+
+        TouchAction(self.driver)   .long_press(x=707, y=1000)   .move_to(x=707, y=1400)   .release()   .perform()
+        TouchAction(self.driver)   .long_press(x=707, y=1000)   .move_to(x=707, y=1400)   .release()   .perform()
+
+        btn_1990 = self.driver.find_element_by_accessibility_id("1990").click()
+        btn_1990.click()
+        el4 = self.driver.find_element_by_accessibility_id("Next month April 1990")
+        el4.click()
+        el5 = self.driver.find_element_by_accessibility_id("1, Sunday, April 1, 1990")
+        el5.click()
+        el6 = self.driver.find_element_by_accessibility_id("OK")
+        el6.click()
+
+        # Click City
+        city_button = self.driver.find_element_by_accessibility_id("City")
+        city_button.click()
+
+        # Choose Ankara
+        ankara_button = self.driver.find_element_by_accessibility_id("Ankara")
+        ankara_button.click()
+
+        # Click Gender
+        gender_button = self.driver.find_element_by_accessibility_id("Gender")
+        gender_button.click()
+
+        # Choose Male
+        male_button = self.driver.find_element_by_accessibility_id("Male")
+        male_button.click()
+
+        # Click Vaccince Type
+        vac_type = self.driver.find_element_by_accessibility_id("Vaccine Type")
+        vac_type.click()
+
+        # Choose Type
+        astra_zen = self.driver.find_element_by_accessibility_id("Oxford-Astra-Zeneca")
+        astra_zen.click()
+
+        self.assertFalse(self.check_submit_exists())
+
+        # Choose Side Effects
+        side_effects = self.driver.find_element_by_accessibility_id("Side Effects")
+        side_effects.click()
+
+        # Choose Muscle Pain
+        muscle_pain = self.driver.find_element_by_accessibility_id("Muscle pain")
+        muscle_pain.click()
+
+        self.driver.close_app()
+        self.driver.launch_app()
+
+        self.assertFalse(self.check_submit_exists())
 
     def tearDown(self):
         print('Report URL: ' + self.driver.capabilities["reportUrl"])

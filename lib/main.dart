@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -36,7 +38,6 @@ class FormScreenState extends State<FormScreen> {
   String _genderValue;
   String _vaccineTypeValue;
   String _sideEffectValue;
-  String _teststring;
   String regExp = r'^[a-z A-ZöçüğşiÖÇÜĞŞİ]+$';
   bool nameFilled = false;
   bool surnameFilled = false;
@@ -92,92 +93,63 @@ class FormScreenState extends State<FormScreen> {
     print(cities);
   }
 
-  Widget _buildNameString() {
-    return Text(
-      'Name',
-      textAlign: TextAlign.left,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(fontWeight: FontWeight.bold),
-    );
-  }
-
   Widget _buildName() {
     return TextFormField(
-      //decoration: InputDecoration(hintText: 'Name'),
-      maxLength: 20,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Email is Required';
-        } else if (!RegExp(regExp).hasMatch(value)) {
-          return 'Please enter a valid name';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _userName = value;
-      },
-      onChanged: (String value) {
-        setState(() {
-          _userName = value;
-          if (_userName.length == 0) {
-            nameFilled = false;
-          } else {
-            nameFilled = true;
+        decoration: InputDecoration(hintText: 'Name'),
+        maxLength: 20,
+        validator: (String value) {
+          if (value.isEmpty) {
+            return 'Email is Required';
+          } else if (!RegExp(regExp).hasMatch(value)) {
+            return 'Please enter a valid name';
           }
-        });
-      },
-    );
-  }
 
-  Widget _buildSurnameString() {
-    return Text(
-      'Surname',
-      textAlign: TextAlign.left,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(fontWeight: FontWeight.bold),
-    );
+          return null;
+        },
+        onSaved: (String value) {
+          _userName = value;
+        },
+        onChanged: (String value) {
+          setState(() {
+            _userName = value;
+            if (_userName.length == 0) {
+              nameFilled = false;
+            } else {
+              nameFilled = true;
+            }
+          });
+        },
+        key: Key('Username'));
   }
 
   Widget _buildSurname() {
     return TextFormField(
-      //decoration: InputDecoration(hintText: 'Surname'),
-      maxLength: 20,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Surname is Required';
-        } else if (!RegExp(regExp).hasMatch(value)) {
-          return 'Please enter a valid surname';
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        _userSurname = value;
-      },
-      onChanged: (String value) {
-        setState(
-          () {
-            _userSurname = value;
-            if (_userSurname.length == 0) {
-              surnameFilled = false;
-            } else {
-              surnameFilled = true;
-            }
-          },
-        );
-      },
-    );
-  }
-
-  Widget _buildBirthDate() {
-    return InputDatePickerFormField(
-      firstDate: DateTime(1920),
-      lastDate: DateTime(2021),
-      errorFormatText:
-          "Input is in wrong format, please enter in dd/mm/yyyy format",
-      errorInvalidText: "Entered date is invalid",
-      fieldLabelText: "Please enter your birth date",
-    );
+        decoration: InputDecoration(hintText: 'Surname'),
+        maxLength: 20,
+        validator: (String value) {
+          if (value.isEmpty) {
+            return 'Surname is Required';
+          } else if (!RegExp(regExp).hasMatch(value)) {
+            return 'Please enter a valid surname';
+          }
+          return null;
+        },
+        onSaved: (String value) {
+          _userSurname = value;
+        },
+        onChanged: (String value) {
+          setState(
+            () {
+              _userSurname = value;
+              if (_userSurname.length == 0) {
+                surnameFilled = false;
+              } else {
+                surnameFilled = true;
+              }
+            },
+          );
+        },
+        key: Key('UserSurname'));
   }
 
   Widget _buildBirthDateField() {
@@ -381,28 +353,6 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
-  Widget _buildXX() {
-    return TextFormField(
-      maxLength: 20,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Required';
-        } else if (!RegExp(regExp).hasMatch(value)) {
-          return 'Please enter a valid input';
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        _teststring = value;
-      },
-      onChanged: (String value) {
-        setState(() {
-          _teststring = value;
-        });
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -427,17 +377,13 @@ class FormScreenState extends State<FormScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                _buildNameString(),
                 _buildName(),
-                _buildSurnameString(),
                 _buildSurname(),
                 _buildBirthDateField(),
-                //_buildBirthDate(),
                 _buildCity(),
                 _buildGender(),
                 _buildVaccineType(),
                 _buildSideEffect(),
-                //_buildXX(),
                 _buildSubmitButton(),
                 SizedBox(height: 100),
               ],
