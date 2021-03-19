@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">CS453-Project</string>
+        <string-array name="City">
+            <item>City</item>
+            <item>Ankara</item>
+            <item>İstanbul</item>
+            <item>İzmir</item>
+            <item>Adana</item>
+            <item>Adıyaman</item>
+            <item>Afyonkarahisar</item>
+            <item>Ağrı</item>
+        </string-array>
+        <string-array name="Genders">
+            <item>Gender</item>
+            <item>Male</item>
+            <item>Female</item>
+            <item>Nonbinary</item>
+            <item>Rather not say</item>
+        </string-array>
+        <string-array name="VaccineType">
+            <item>Vaccine Type</item>
+            <item>Pfizer-BioNtech</item>
+            <item>Sputnik V</item>
+            <item>Oxford-Astra-Zeneca</item>
+            <item>Sinovac</item>
+            <item>Moderna</item>
+            <item>Johnson-Johnson</item>
+        </string-array>
+    <string-array name="SideEffects">
+        <item>None</item>
+        <item>Headache</item>
+        <item>Fatigue</item>
+        <item>Fever</item>
+        <item>Muscle pain</item>
+        <item>Diarrhoea</item>
+        <item>Pain at the injection site</item>
+    </string-array>
+</resources>
