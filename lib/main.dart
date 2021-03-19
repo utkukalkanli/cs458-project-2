@@ -29,14 +29,15 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
-  String _name;
-  String _surname;
+  String _userName;
+  String _userSurname;
   DateTime birthDate = DateTime.now();
   String _cityValue;
   String _genderValue;
   String _vaccineTypeValue;
   String _sideEffectValue;
-  String regExp = r'^[a-z A-Z]+$';
+  String _teststring;
+  String regExp = r'^[a-z A-ZöçüğşiÖÇÜĞŞİ]+$';
   bool nameFilled = false;
   bool surnameFilled = false;
   bool birthDateFilled = false;
@@ -91,9 +92,18 @@ class FormScreenState extends State<FormScreen> {
     print(cities);
   }
 
+  Widget _buildNameString() {
+    return Text(
+      'Name',
+      textAlign: TextAlign.left,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(fontWeight: FontWeight.bold),
+    );
+  }
+
   Widget _buildName() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Name'),
+      //decoration: InputDecoration(hintText: 'Name'),
       maxLength: 20,
       validator: (String value) {
         if (value.isEmpty) {
@@ -105,12 +115,12 @@ class FormScreenState extends State<FormScreen> {
         return null;
       },
       onSaved: (String value) {
-        _name = value;
+        _userName = value;
       },
       onChanged: (String value) {
         setState(() {
-          _name = value;
-          if (_name.length == 0) {
+          _userName = value;
+          if (_userName.length == 0) {
             nameFilled = false;
           } else {
             nameFilled = true;
@@ -120,9 +130,18 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  Widget _buildSurnameString() {
+    return Text(
+      'Surname',
+      textAlign: TextAlign.left,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(fontWeight: FontWeight.bold),
+    );
+  }
+
   Widget _buildSurname() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Surname'),
+      //decoration: InputDecoration(hintText: 'Surname'),
       maxLength: 20,
       validator: (String value) {
         if (value.isEmpty) {
@@ -133,13 +152,13 @@ class FormScreenState extends State<FormScreen> {
         return null;
       },
       onSaved: (String value) {
-        _surname = value;
+        _userSurname = value;
       },
       onChanged: (String value) {
         setState(
           () {
-            _surname = value;
-            if (_surname.length == 0) {
+            _userSurname = value;
+            if (_userSurname.length == 0) {
               surnameFilled = false;
             } else {
               surnameFilled = true;
@@ -343,8 +362,8 @@ class FormScreenState extends State<FormScreen> {
             return;
           }
           _formKey.currentState.save();
-          print(_name);
-          print(_surname);
+          print(_userName);
+          print(_userSurname);
           //print(_birthDate.toString());
           print(birthDate.toString());
           print(_cityValue);
@@ -352,7 +371,7 @@ class FormScreenState extends State<FormScreen> {
           print(_vaccineTypeValue);
           print(_sideEffectValue);
           Navigator.pushNamed(context, SecondPage.routeName,
-              arguments: ScreenArguments(_name, _surname, birthDate,
+              arguments: ScreenArguments(_userName, _userSurname, birthDate,
                   _genderValue, _cityValue, _sideEffectValue, _vaccineTypeValue)
               //MaterialPageRoute(builder: (context) => SecondPage()),
               );
@@ -374,16 +393,11 @@ class FormScreenState extends State<FormScreen> {
         return null;
       },
       onSaved: (String value) {
-        _name = value;
+        _teststring = value;
       },
       onChanged: (String value) {
         setState(() {
-          _name = value;
-          if (_name.length == 0) {
-            nameFilled = false;
-          } else {
-            nameFilled = true;
-          }
+          _teststring = value;
         });
       },
     );
@@ -413,7 +427,9 @@ class FormScreenState extends State<FormScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                _buildNameString(),
                 _buildName(),
+                _buildSurnameString(),
                 _buildSurname(),
                 _buildBirthDateField(),
                 //_buildBirthDate(),
@@ -421,8 +437,8 @@ class FormScreenState extends State<FormScreen> {
                 _buildGender(),
                 _buildVaccineType(),
                 _buildSideEffect(),
+                //_buildXX(),
                 _buildSubmitButton(),
-                _buildXX(),
                 SizedBox(height: 100),
               ],
             ),
@@ -435,15 +451,21 @@ class FormScreenState extends State<FormScreen> {
 
 // things about result page
 class ScreenArguments {
-  String _name;
-  String _surname;
+  String _userName;
+  String _userSurname;
   DateTime birthDate;
   String _cityValue;
   String _genderValue;
   String _vaccineTypeValue;
   String _sideEffectValue;
-  ScreenArguments(this._name, this._surname, this.birthDate, this._genderValue,
-      this._cityValue, this._sideEffectValue, this._vaccineTypeValue);
+  ScreenArguments(
+      this._userName,
+      this._userSurname,
+      this.birthDate,
+      this._genderValue,
+      this._cityValue,
+      this._sideEffectValue,
+      this._vaccineTypeValue);
 }
 
 class SecondPage extends StatelessWidget {
@@ -462,8 +484,8 @@ class SecondPage extends StatelessWidget {
             child: Container(
           child: Column(
             children: [
-              Text(args._name),
-              Text(args._surname),
+              Text(args._userName),
+              Text(args._userSurname),
               Text(args.birthDate.toString()),
               Text(args._genderValue),
               Text(args._cityValue),
